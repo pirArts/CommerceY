@@ -1,0 +1,38 @@
+<jxb:bindings version="1.0" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <jxb:bindings schemaLocation="library.xsd" node="/xs:schema"><!-- schemaLocation属性是xsd文件的相对路径 -->
+        <jxb:globalBindings
+                fixedAttributeAsConstantProperty="true"
+                collectionType="java.util.ArrayList"
+                typesafeEnumBase="xs:NCName"
+                choiceContentProperty="false"
+                typesafeEnumMemberName="generateError"
+                enableFailFastCheck="false"
+                generateIsSetMethod="false"
+                underscoreBinding="asCharInWord"/>
+        <jxb:schemaBindings>
+            <jxb:package name="com.baymax.object"/>
+            <!-- 这里是生成的JAVA类文件存放包名 -->
+            <jxb:nameXmlTransform>
+                <jxb:elementName suffix="Element"/>
+            </jxb:nameXmlTransform>
+        </jxb:schemaBindings>
+        <!-- 这里是定义xsd中一个复合类型与Java类的映射（如果要修改才定义，不修改则不需要） -->
+        <jxb:bindings node="//xs:complexType[@name='librarys']">
+            <jxb:class name="Librarys"/>
+        </jxb:bindings>
+        <jxb:bindings node="//xs:complexType[@name='book']">
+            <jxb:class name="Book"/>
+            <!--　这里是定义复合类型的一个元素名称与Java类中属性的映射（如果要修改才定义，不修改则不需要） -->
+            <jxb:bindings node=".//xs:element[@name='bookID']">
+                <jxb:property name="id"/>
+            </jxb:bindings>
+        </jxb:bindings>
+        <jxb:bindings node="//xs:complexType[@name='user']">
+            <jxb:class name="User"/>
+            <!--　这里是定义复合类型的一个元素名称与Java类中属性的映射（如果要修改才定义，不修改则不需要） -->
+            <jxb:bindings node=".//xs:element[@name='userID']">
+                <jxb:property name="id"/>
+            </jxb:bindings>
+        </jxb:bindings>
+    </jxb:bindings>
+</jxb:bindings>

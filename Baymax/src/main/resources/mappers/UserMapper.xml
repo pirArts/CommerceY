@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ea.nex.Mappers.UserMapper">
+    <resultMap id="baseResultMap" type="com.ea.nex.Models.UserDB">
+        <id column="ID" property="id"/>
+        <result column="DEVICE_ID" property="deviceId"/>
+        <result column="NAME" property="name"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="DATE_CREATED" property="dateCreated"/>
+        <result column="DATE_MODIFIED" property="dateModified"/>
+    </resultMap>
+
+    <sql id="table">
+        identity.USER
+    </sql>
+
+    <sql id="column">
+        DEVICE_ID,
+        NAME,
+        PASSWORD
+    </sql>
+
+    <sql id="values">
+        #{entity.deviceId},
+        #{entity.name},
+        #{entity.password}
+    </sql>
+
+    <insert id="save" parameterType="com.ea.nex.Models.UserDB" >
+        INSERT INTO <include refid="table"/>
+        (
+           <include refid="column"/>
+        )
+        VALUES
+        (
+          <include refid="values"/>
+        )
+    </insert>
+
+    <select id="getUserByDeviceId" resultMap="baseResultMap" parameterType="String">
+        SELECT
+        ID,
+        <include refid="column"/>
+        FROM <include refid="table"/>
+        WHERE DEVICE_ID = #{deviceId}
+    </select>
+
+</mapper>
