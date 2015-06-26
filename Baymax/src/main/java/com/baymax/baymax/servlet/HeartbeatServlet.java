@@ -1,10 +1,19 @@
 package com.baymax.baymax.servlet;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import com.google.gson.Gson;
+
+import com.baymax.baymax.model.User;
+import com.baymax.baymax.service.identity.UserService;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,10 +23,37 @@ import java.io.PrintWriter;
  */
 public class HeartbeatServlet extends BaseServlet{
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException,IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
+        try{
+
+        }
+        catch(Exception ex)
+        {
+
+        }
+
+        // HttpSession session = req.getSession(true);
+        ServletContext context = req.getServletContext();
+        
+        WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
+        
+        UserService userService = (UserService)wac.getBean("userServiceImpl");
+
+        /*
+        User user = new User();
+        user.setDeviceId("aaaaa");
+        user.setName("Hao");
+
+        userService.insertUser(user);
+        */
+
+        User user = userService.getUserByDeviceId("aaaaa");
+
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+
         resp.setStatus(200);
-        writeResponse(resp, "{success}");
+        writeResponse(resp, json);
     }
 
     private void writeResponse(HttpServletResponse response, String info) throws IOException {
