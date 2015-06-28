@@ -18,6 +18,16 @@
         <url-pattern>/heartbeat</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>WeChat</servlet-name>
+        <servlet-class>com.baymax.baymax.servlet.WeChatServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>WeChat</servlet-name>
+        <url-pattern>/wechat</url-pattern>
+    </servlet-mapping>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:conf/spring.xml;classpath:conf/spring-mybatis.xml

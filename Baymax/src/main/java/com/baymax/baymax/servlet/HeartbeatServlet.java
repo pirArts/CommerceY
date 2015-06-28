@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import com.google.gson.Gson;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.baymax.baymax.model.User;
 import com.baymax.baymax.service.identity.UserService;
 
@@ -22,15 +25,10 @@ import com.baymax.baymax.service.identity.UserService;
  * Time: 2:26 PM
  */
 public class HeartbeatServlet extends BaseServlet{
+    private final static Logger logger = LoggerFactory.getLogger(HeartbeatServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
-        try{
-
-        }
-        catch(Exception ex)
-        {
-
-        }
 
         // HttpSession session = req.getSession(true);
         ServletContext context = req.getServletContext();
@@ -47,10 +45,13 @@ public class HeartbeatServlet extends BaseServlet{
         userService.insertUser(user);
         */
 
+
         User user = userService.getUserByDeviceId("aaaaa");
 
         Gson gson = new Gson();
         String json = gson.toJson(user);
+
+        logger.debug("json data: {}", json);
 
         resp.setStatus(200);
         writeResponse(resp, json);
