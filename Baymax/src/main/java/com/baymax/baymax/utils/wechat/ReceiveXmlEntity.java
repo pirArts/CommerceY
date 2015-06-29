@@ -1,4 +1,4 @@
-package com.baymax.baymax.utils;
+package com.baymax.baymax.utils.wechat;
 
 public class ReceiveXmlEntity {  
     private String ToUserName="";  

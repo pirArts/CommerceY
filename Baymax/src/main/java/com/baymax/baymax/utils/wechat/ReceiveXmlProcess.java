@@ -1,4 +1,4 @@
-package com.baymax.baymax.utils;
+package com.baymax.baymax.utils.wechat;
   
 import java.lang.reflect.Field;  
 import java.lang.reflect.Method;  
@@ -23,7 +23,7 @@ public class ReceiveXmlProcess {
 
             msg = new ReceiveXmlEntity();  
 
-            Class<?> c = Class.forName("com.baymax.baymax.utils.ReceiveXmlEntity");  
+            Class<?> c = Class.forName("com.baymax.baymax.utils.wechat.ReceiveXmlEntity");  
             msg = (ReceiveXmlEntity)c.newInstance();
               
             while(iter.hasNext()){  
@@ -37,7 +37,7 @@ public class ReceiveXmlProcess {
             }  
         } catch (Exception e) {  
 
-            System.out.println("xml formate invalid: "+ strXml);  
+            System.out.println("xml format invalid: "+ strXml);  
             e.printStackTrace();  
         }  
         return msg;  

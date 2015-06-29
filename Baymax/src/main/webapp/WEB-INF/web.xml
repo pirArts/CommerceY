@@ -20,7 +20,7 @@
 
     <servlet>
         <servlet-name>WeChat</servlet-name>
-        <servlet-class>com.baymax.baymax.servlet.WeChatServlet</servlet-class>
+        <servlet-class>com.baymax.baymax.servlet.wechat.WeChatServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -28,10 +28,19 @@
         <url-pattern>/wechat</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>OAuth2</servlet-name>
+        <servlet-class>com.baymax.baymax.servlet.wechat.OAuth2Servlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OAuth2</servlet-name>
+        <url-pattern>/oauth2</url-pattern>
+    </servlet-mapping>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:conf/spring.xml;classpath:conf/spring-mybatis.xml
-        </param-value>
+        <param-value>classpath:conf/spring.xml;classpath:conf/spring-mybatis.xml</param-value>
     </context-param>
 
     <listener>

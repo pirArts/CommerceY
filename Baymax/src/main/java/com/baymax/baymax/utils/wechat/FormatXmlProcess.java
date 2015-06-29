@@ -1,4 +1,4 @@
-package com.baymax.baymax.utils;
+package com.baymax.baymax.utils.wechat;
 
 import java.util.Date;
 

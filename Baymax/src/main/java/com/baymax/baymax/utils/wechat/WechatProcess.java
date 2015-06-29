@@ -1,4 +1,4 @@
-package com.baymax.baymax.utils; 
+package com.baymax.baymax.utils.wechat; 
   
 import java.util.Date;  
 
@@ -17,7 +17,7 @@ public class WechatProcess {
                 result = "Welcome to subscribe us!";
             }
             else if(xmlEntity.getEvent().equals("CLICK")){
-                result = "You click " + xmlEntity.getEventKey();
+                result = "Your OPENID is " + xmlEntity.getFromUserName() + ";" + "You click " + xmlEntity.getEventKey();
             }
         }
          

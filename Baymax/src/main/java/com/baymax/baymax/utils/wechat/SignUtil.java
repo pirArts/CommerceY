@@ -1,4 +1,4 @@
-package com.baymax.baymax.utils;
+package com.baymax.baymax.utils.wechat;
  
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

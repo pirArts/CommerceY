@@ -1,4 +1,4 @@
-package com.baymax.baymax.servlet;
+package com.baymax.baymax.servlet.wechat;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.baymax.baymax.utils.SignUtil;
-import com.baymax.baymax.utils.WechatProcess;
+import com.baymax.baymax.servlet.BaseServlet;
+
+import com.baymax.baymax.utils.wechat.SignUtil;
+import com.baymax.baymax.utils.wechat.WechatProcess;
 
 public class WeChatServlet extends BaseServlet{
     private final static Logger logger = LoggerFactory.getLogger(WeChatServlet.class);
