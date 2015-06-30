@@ -11,7 +11,7 @@
     <name>Baymax</name>
 
     <properties>
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.version>4.0.0.RELEASE</spring.version>
         <jdk.version>1.7</jdk.version>
         <logback.version>1.0.13</logback.version>
         <jcl-over-slf4j.version>1.7.5</jcl-over-slf4j.version>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>4.0.6.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
@@ -120,6 +120,18 @@
             <artifactId>httpclient</artifactId>
             <version>4.3.2</version>
         </dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
         <!--
         <dependency>
             <groupId>org.eclipse.persistence</groupId>

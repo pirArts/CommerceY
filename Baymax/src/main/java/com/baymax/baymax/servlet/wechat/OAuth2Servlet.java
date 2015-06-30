@@ -11,9 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import com.google.gson.Gson;
 
 import com.baymax.baymax.servlet.BaseServlet;
 import com.baymax.baymax.utils.common.HttpUtil;
+
+import com.baymax.baymax.utils.wechat.AccessTokenResult;
 
 public class OAuth2Servlet extends BaseServlet {
 
@@ -35,6 +38,22 @@ public class OAuth2Servlet extends BaseServlet {
             paramPair.put("grant_type", "authorization_code");
 
             result = new HttpUtil().GetContentFromUrl(url, paramPair);
+            
+            Gson gson = new Gson();
+            AccessTokenResult atr = gson.fromJson(result, AccessTokenResult.class);
+            
+            logger.debug(atr.getOpenid());
+            
+            if(atr.getOpenid() != null){
+                
+                String userInfoUrl = "https://api.weixin.qq.com/sns/userinfo";
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("access_token", atr.getAcessToken());
+                params.put("openid", atr.getOpenid());
+                params.put("lang", "zh_CN");
+                
+                result = new HttpUtil().GetContentFromUrl(userInfoUrl, params);
+            }
         }
 
         logger.debug(result);
