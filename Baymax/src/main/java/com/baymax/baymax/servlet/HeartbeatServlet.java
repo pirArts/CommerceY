@@ -5,8 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,24 +17,15 @@ import org.slf4j.LoggerFactory;
 import com.baymax.baymax.model.User;
 import com.baymax.baymax.service.identity.UserService;
 
-/**
- * Created with IntelliJ IDEA.
- * User: EricQiu
- * Date: 5/12/15
- * Time: 2:26 PM
- */
 public class HeartbeatServlet extends BaseServlet{
+    
     private final static Logger logger = LoggerFactory.getLogger(HeartbeatServlet.class);
 
+    @Autowired
+    private UserService userService;
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
-
-        // HttpSession session = req.getSession(true);
-        ServletContext context = req.getServletContext();
-        
-        WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
-        
-        UserService userService = (UserService)wac.getBean("userServiceImpl");
 
         /*
         User user = new User();
@@ -44,7 +34,6 @@ public class HeartbeatServlet extends BaseServlet{
 
         userService.insertUser(user);
         */
-
 
         User user = userService.getUserByDeviceId("aaaaa");
 

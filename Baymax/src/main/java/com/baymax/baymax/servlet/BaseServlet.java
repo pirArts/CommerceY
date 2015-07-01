@@ -1,17 +1,14 @@
 package com.baymax.baymax.servlet;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: EricQiu
- * Date: 5/12/15
- * Time: 2:27 PM
- */
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
 public abstract class BaseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -24,4 +21,9 @@ public abstract class BaseServlet extends HttpServlet {
             throws ServletException, IOException {
         throw new ServletException("Error call for Get: "+ this.getClass().getName());
     }
+    
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config); 
+	    SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+	}
 }
