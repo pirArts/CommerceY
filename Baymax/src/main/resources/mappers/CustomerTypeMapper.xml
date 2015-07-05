@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baymax.baymax.dao.CustomerTypeDAO">
+  <select id="getCustomerType" resultType="CustomerType">
+    SELECT
+      id,
+      name
+    FROM `customer_type`
+    WHERE id = #{id}
+  </select>
+
+  <select id="getCustomerTypeByName" resultType="CustomerType">
+    SELECT
+      id,
+      name
+    FROM `customer_type`
+    WHERE name = #{name}
+  </select>
+
+  <select id="getCustomerTypeList" resultType="CustomerType">
+    SELECT
+      id,
+      name
+    FROM `customer_type`
+  </select>
+
+  <insert id="insertCustomerType" parameterType="CustomerType" >
+    INSERT INTO customer_type
+    (
+       name
+    )
+    VALUES
+    (
+      #{name}
+    )
+  </insert>
+
+  <delete id="deleteCustomerType" parameterType="CustomerType" >
+    DELETE FROM customer_type WHERE id = #{id}
+  </delete>
+</mapper>

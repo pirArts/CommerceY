@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  Primitive or simply data types such as Integer and String have no relevant properties,
+ and thus will replace the full value of the parameter entirely, so the name of the parameter is not important-->
+<mapper namespace = "com.baymax.baymax.dao.CustomerDAO">
+  <resultMap id="DetailedCustomerResultMap" type="Customer">
+        <id column="id" property="id"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="gender" property="gender"/>
+        <result column="wechat_openid" property="wechatOpenID"/>
+        <association property="customerType" javaType="CustomerType">
+          <id column="customer_type_id" property="id"/>
+          <result column="customer_type_name" property="name"/>
+        </association>
+  </resultMap>
+    
+  <select id="getCustomerByEmail" resultMap="DetailedCustomerResultMap">
+    SELECT
+       customer.id,
+       customer.email,
+       customer.password,
+       customer.nickname,
+       customer.phone,
+       customer.address,
+       customer.gender,
+       customer.wechat_openid,
+       customer.customer_type_id,
+       customer_type.name AS customer_type_name
+    FROM customer, customer_type
+    WHERE customer.email = #{email} AND customer.customer_type_id = customer_type.id
+  </select>
+
+  <insert id="insertCustomer" parameterType="Customer" >
+        INSERT INTO customer
+        (
+           email, 
+           password, 
+           nickname,
+           phone,
+           address,
+           gender,
+           wechat_openid, 
+           customer_type_id
+        )
+        VALUES
+        (
+          #{email},
+          #{password},
+          #{nickname},
+          #{phone},
+          #{address},
+          #{gender},
+          #{wechatOpenID},
+          #{customerType.id}
+        )
+  </insert>
+
+  <delete id="deleteCustomer" parameterType="Customer" >
+    DELETE FROM customer WHERE id = #{id}
+  </delete>
+
+  <delete id="deleteCustomersByType" parameterType="Customer" >
+    DELETE FROM customer WHERE customer_type_id = #{customerType.id}
+  </delete>
+</mapper>

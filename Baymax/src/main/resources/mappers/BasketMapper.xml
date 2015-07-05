@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  Primitive or simply data types such as Integer and String have no relevant properties,
+ and thus will replace the full value of the parameter entirely, so the name of the parameter is not important-->
+<mapper namespace = "com.baymax.baymax.dao.BasketDAO">
+  <resultMap id="DetailedBasketResultMap" type="Basket">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="amount" property="amount"/>
+        <association property="customer" javaType="Customer">
+            <id column="customer_id" property="id"/>
+            <result column="email" property="email"/>
+            <result column="password" property="password"/>
+            <result column="nickname" property="nickname"/>
+            <result column="phone" property="phone"/>
+            <result column="address" property="address"/>
+            <result column="gender" property="gender"/>
+            <result column="wechat_openid" property="wechatOpenID"/>
+        </association>
+        <collection property="basketItems" ofType="BasketItem">
+            <id property="id" column="basket_item_id"/>
+            <result property="quantity" column="quantity"/>
+            <association property="product" javaType="Product">
+                <id column="product_id" property="id"/>
+                <result column="name" property="name"/>
+                <result column="description" property="description"/>
+                <result column="price" property="price"/>
+            </association>
+        </collection>
+  </resultMap>
+    
+  <select id="getBasketByUserEmail" resultMap="DetailedBasketResultMap">
+    SELECT
+       basket.id,
+       basket.create_time,
+       basket.amount,
+       basket_item.id AS basket_item_id,
+       basket_item.quantity,
+       product.id AS product_id,
+       product.name,
+       product.description,
+       product.price,
+       basket.customer_id,
+       customer.email,
+       customer.password,
+       customer.nickname,
+       customer.phone,
+       customer.address,
+       customer.gender,
+       customer.wechat_openid
+    FROM basket, basket_item, customer, product
+    WHERE customer.email = #{email} AND basket.id = basket_item.basket_id AND basket.customer_id = customer.id AND basket_item.product_id = product.id
+  </select>
+</mapper>

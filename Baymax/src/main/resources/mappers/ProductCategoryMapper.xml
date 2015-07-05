@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baymax.baymax.dao.ProductCategoryDAO">
+  <select id="getCategory" resultType="ProductCategory">
+    SELECT
+      id,
+      name
+    FROM `product_category`
+    WHERE id = #{id}
+  </select>
+
+  <select id="getCategoryByName" resultType="ProductCategory">
+    SELECT
+      id,
+      name
+    FROM `product_category`
+    WHERE name = #{name}
+  </select>
+
+  <select id="getCategoryList" resultType="ProductCategory">
+    SELECT
+      id,
+      name
+    FROM `product_category`
+  </select>
+
+  <insert id="insertProductCategory" parameterType="ProductCategory" >
+    INSERT INTO product_category
+    (
+       name
+    )
+    VALUES
+    (
+      #{name}
+    )
+  </insert>
+
+  <delete id="deleteProductCategory" parameterType="ProductCategory" >
+    DELETE FROM product_category WHERE id = #{id}
+  </delete>
+</mapper>
