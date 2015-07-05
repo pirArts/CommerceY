@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  Primitive or simply data types such as Integer and String have no relevant properties,
+ and thus will replace the full value of the parameter entirely, so the name of the parameter is not important-->
+<mapper namespace = "com.baymax.baymax.dao.ProductDAO">
+  <resultMap id="DetailedProductResultMap" type="Product">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="price" property="price"/>
+        <association property="productCategory" javaType="ProductCategory">
+          <id column="product_category_id" property="id"/>
+          <result column="product_category_name" property="name"/>
+        </association>
+  </resultMap>
+    
+  <select id="getProduct" resultMap="DetailedProductResultMap">
+    SELECT
+      product.id,
+      product.name,
+      product.description,
+      product.price,
+      product.product_category_id,
+      product_category.name AS product_category_name
+    FROM product, product_category
+    WHERE id = #{id} AND product.product_category_id = product_category.id
+  </select>
+
+  <select id="getProductListByCategory" resultMap="DetailedProductResultMap">
+    SELECT
+      product.id,
+      product.name,
+      product.description,
+      product.price,
+      product.product_category_id,
+      product_category.name AS product_category_name
+    FROM product, product_category
+    WHERE product_category.id = #{value} AND product.product_category_id = product_category.id
+  </select>
+
+  <select id="searchProductList" resultMap="DetailedProductResultMap">
+    SELECT
+      product.id,
+      product.name,
+      product.description,
+      product.price,
+      product.product_category_id,
+      product_category.name AS product_category_name
+    FROM product, product_category
+    WHERE lower(product.name) like #{value} AND product.product_category_id = product_category.id
+  </select>
+
+  <insert id="insertProduct" parameterType="Product" >
+        INSERT INTO product
+        (
+           name, 
+           price, 
+           description, 
+           product_category_id
+        )
+        VALUES
+        (
+          #{name},
+          #{price},
+          #{description},
+          #{productCategory.id}
+        )
+  </insert>
+
+  <delete id="deleteProduct" parameterType="Product" >
+    DELETE FROM product WHERE id = #{id}
+  </delete>
+
+  <delete id="deleteProductsByCategory" parameterType="Product" >
+    DELETE FROM product WHERE product_category_id = #{productCategory.id}
+  </delete>
+</mapper>

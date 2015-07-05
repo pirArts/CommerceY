@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  Primitive or simply data types such as Integer and String have no relevant properties,
+ and thus will replace the full value of the parameter entirely, so the name of the parameter is not important-->
+<mapper namespace = "com.baymax.baymax.dao.OrderDAO">
+  <resultMap id="DetailedOrderResultMap" type="Order">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="amount" property="amount"/>
+        <result column="payment_time" property="paymentTime"/>
+        <result column="payment_result" property="paymentResult"/>
+        <association property="customer" javaType="Customer">
+            <id column="customer_id" property="id"/>
+            <result column="email" property="email"/>
+            <result column="password" property="password"/>
+            <result column="nickname" property="nickname"/>
+            <result column="phone" property="phone"/>
+            <result column="address" property="address"/>
+            <result column="gender" property="gender"/>
+            <result column="wechat_openid" property="wechatOpenID"/>
+        </association>
+        <association property="orderState" javaType="OrderState">
+            <id column="order_state_id" property="id"/>
+            <result column="order_state_name" property="name"/>
+        </association>
+        <association property="paymentType" javaType="PaymentType">
+            <id column="payment_type_id" property="id"/>
+            <result column="payment_type_name" property="name"/>
+        </association>
+        <collection property="orderItems" ofType="OrderItem">
+            <id property="id" column="order_item_id"/>
+            <result property="quantity" column="quantity"/>
+            <association property="product" javaType="Product">
+                <id column="product_id" property="id"/>
+                <result column="name" property="name"/>
+                <result column="description" property="description"/>
+                <result column="price" property="price"/>
+            </association>
+        </collection>
+  </resultMap>
+    
+  <select id="getOrderByUserEmail" resultMap="DetailedOrderResultMap">
+    SELECT
+       order.id,
+       order.create_time,
+       order.amount,
+       order_item.id AS order_item_id,
+       order_item.quantity,
+       product.id AS product_id,
+       product.name,
+       product.description,
+       product.price,
+       customer.id AS customer_id,
+       customer.email,
+       customer.password,
+       customer.nickname,
+       customer.phone,
+       customer.address,
+       customer.gender,
+       customer.wechat_openid,
+       order_state.id AS order_state_id,
+       order_state.name AS order_state_name,
+       payment_type.id AS payment_type_id,
+       payment_type.name AS payment_type_name
+    FROM order, order_item, customer, product, order_state, payment_type
+    WHERE customer.email = #{email} AND order.id = order_item.order_id AND order.customer_id = customer.id AND order_item.product_id = product.id AND order.order_state_id = order_state.id AND order.payment_type_id = payment_type.id
+  </select>
+</mapper>
