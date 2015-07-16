@@ -1,10 +1,10 @@
 package com.baymax.baymax.model;
 
 public class CustomerType{
-	private long id;
-	private String name;
-	
-	public Long getId() {
+    private long id;
+    private String name;
+    
+    public Long getId() {
         return id;
     }
 

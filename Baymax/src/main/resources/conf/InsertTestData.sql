@@ -29,3 +29,36 @@ INSERT INTO customer (email, password, nickname,phone,address,gender,wechat_open
 
 INSERT INTO customer (email, password, nickname,phone,address,gender,wechat_openid, customer_type_id) VALUES ('yhao880514@126.com', '1', 'Yan', '111', 'streetA', 'M', '123456', 2);
 INSERT INTO customer (email, password, nickname,phone,address,gender,wechat_openid, customer_type_id) VALUES ('yhao880514@163.com', '1', 'Yan', '111', 'streetA', 'M', '123456', 2);
+
+INSERT INTO basket(amount, create_time, customer_id) VALUES(0, '2015-01-01', 1);
+
+INSERT INTO basket_item(basket_id, product_id, quantity) VALUES (1,  1, 10);
+INSERT INTO basket_item(basket_id, product_id, quantity) VALUES (1,  2, 3);
+INSERT INTO basket_item(basket_id, product_id, quantity) VALUES (1,  3, 3);
+INSERT INTO basket_item(basket_id, product_id, quantity) VALUES (1,  4, 3);
+INSERT INTO basket_item(basket_id, product_id, quantity) VALUES (1,  5, 3);
+INSERT INTO basket_item(basket_id, product_id, quantity) VALUES (1,  6, 3);
+
+INSERT INTO order_state(name) VALUES ("opened");
+INSERT INTO order_state(name) VALUES ("closed");
+
+INSERT INTO payment_type(name) VALUES ("wechat");
+INSERT INTO payment_type(name) VALUES ("paypal");
+INSERT INTO payment_type(name) VALUES ("alipay");
+
+INSERT INTO `order`(amount, create_time, payment_time, payment_result, customer_id, order_state_id, payment_type_id) VALUES (0,  '2015-01-01',  '2015-01-01', 0,  1,  1,  1);
+
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (1 ,1, 10);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (1 ,2, 3);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (1 ,3, 3);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (1 ,4, 3);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (1 ,5, 3);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (1 ,6, 3);
+
+INSERT INTO `order`(amount, create_time, payment_time, payment_result, customer_id, order_state_id, payment_type_id) VALUES (0,  '2015-01-01',  '2015-01-01', 0,  1,  2,  2);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (2 ,1, 10);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (2 ,2, 3);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (2 ,3, 3);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (2 ,4, 3);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (2 ,5, 3);
+INSERT INTO order_item(order_id, product_id, quantity) VALUES (2 ,6, 3);

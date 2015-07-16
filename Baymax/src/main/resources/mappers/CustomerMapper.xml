@@ -33,8 +33,9 @@
        customer.wechat_openid,
        customer.customer_type_id,
        customer_type.name AS customer_type_name
-    FROM customer, customer_type
-    WHERE customer.email = #{email} AND customer.customer_type_id = customer_type.id
+    FROM customer
+    LEFT OUTER JOIN customer_type ON customer.customer_type_id = customer_type.id
+    WHERE customer.email = #{email} 
   </select>
 
   <insert id="insertCustomer" parameterType="Customer" >

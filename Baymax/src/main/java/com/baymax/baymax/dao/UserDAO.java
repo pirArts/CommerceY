@@ -8,6 +8,6 @@ import com.baymax.baymax.model.User;
  * Time: 3:42 PM
  */
 public interface UserDAO {
-	public int insertUser(User user);
-	public User getUserByDeviceId(String deviceId);
+    public int insertUser(User user);
+    public User getUserByDeviceId(String deviceId);
 }

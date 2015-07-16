@@ -6,4 +6,7 @@ import com.baymax.baymax.model.Order;
 
 public interface OrderDAO{
     List<Order> getOrderByUserEmail(String email);
+
+    void insertOrder(Order order);
+    void deleteOrder(Order order);
 }

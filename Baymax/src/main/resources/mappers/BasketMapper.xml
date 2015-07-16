@@ -20,15 +20,18 @@
             <result column="gender" property="gender"/>
             <result column="wechat_openid" property="wechatOpenID"/>
         </association>
+
         <collection property="basketItems" ofType="BasketItem">
             <id property="id" column="basket_item_id"/>
             <result property="quantity" column="quantity"/>
+            
             <association property="product" javaType="Product">
                 <id column="product_id" property="id"/>
                 <result column="name" property="name"/>
                 <result column="description" property="description"/>
                 <result column="price" property="price"/>
             </association>
+          
         </collection>
   </resultMap>
     
@@ -51,7 +54,30 @@
        customer.address,
        customer.gender,
        customer.wechat_openid
-    FROM basket, basket_item, customer, product
-    WHERE customer.email = #{email} AND basket.id = basket_item.basket_id AND basket.customer_id = customer.id AND basket_item.product_id = product.id
+    FROM basket
+    LEFT OUTER JOIN customer ON basket.customer_id = customer.id
+    LEFT OUTER JOIN basket_item ON basket.id = basket_item.basket_id
+    LEFT OUTER JOIN product ON basket_item.product_id = product.id
+    WHERE customer.email = #{email}
   </select>
+
+  <insert id="insertBasket" parameterType="Basket" >
+        INSERT INTO basket
+        (
+           amount, 
+           create_time, 
+           customer_id
+        )
+        VALUES
+        (
+          #{amount},
+          #{createTime},
+          #{customer.id}
+        )
+  </insert>
+
+  <delete id="deleteBasket" parameterType="Basket" >
+    DELETE FROM basket WHERE id = #{id}
+  </delete>
+  
 </mapper>

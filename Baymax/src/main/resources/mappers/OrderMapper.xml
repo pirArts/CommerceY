@@ -44,9 +44,11 @@
     
   <select id="getOrderByUserEmail" resultMap="DetailedOrderResultMap">
     SELECT
-       order.id,
-       order.create_time,
-       order.amount,
+       `order`.id,
+       `order`.create_time,
+       `order`.amount,
+       `order`.payment_time,
+       `order`.payment_result,
        order_item.id AS order_item_id,
        order_item.quantity,
        product.id AS product_id,
@@ -65,7 +67,39 @@
        order_state.name AS order_state_name,
        payment_type.id AS payment_type_id,
        payment_type.name AS payment_type_name
-    FROM order, order_item, customer, product, order_state, payment_type
-    WHERE customer.email = #{email} AND order.id = order_item.order_id AND order.customer_id = customer.id AND order_item.product_id = product.id AND order.order_state_id = order_state.id AND order.payment_type_id = payment_type.id
+    FROM `order`
+    LEFT OUTER JOIN customer ON `order`.customer_id = customer.id
+    LEFT OUTER JOIN order_state ON `order`.order_state_id = order_state.id
+    LEFT OUTER JOIN payment_type ON `order`.payment_type_id = payment_type.id
+    LEFT OUTER JOIN order_item ON `order`.id = order_item.order_id
+    LEFT OUTER JOIN product ON order_item.product_id = product.id
+    WHERE customer.email = #{email}
   </select>
+  
+  <insert id="insertOrder" parameterType="Order" >
+        INSERT INTO `order`
+        (
+           amount,
+           create_time,
+           payment_time,
+           payment_result, 
+           customer_id,
+           order_state_id,
+           payment_type_id
+        )
+        VALUES
+        (
+          #{amount},
+          #{createTime},
+          #{paymentTime},
+          #{paymentResult},
+          #{customer.id},
+          #{orderState.id},
+          #{paymentType.id}
+        )
+  </insert>
+
+  <delete id="deleteOrder" parameterType="Order" >
+    DELETE FROM `order` WHERE id = #{id}
+  </delete>
 </mapper>
