@@ -4,16 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baymax.baymax.model.Order;
 import com.baymax.baymax.dao.OrderDAO;
-
 import com.baymax.baymax.model.OrderItem;
 import com.baymax.baymax.dao.OrderItemDAO;
-
 import com.baymax.baymax.model.OrderState;
 import com.baymax.baymax.dao.OrderStateDAO;
-
 import com.baymax.baymax.model.PaymentType;
 import com.baymax.baymax.dao.PaymentTypeDAO;
 
@@ -37,13 +35,21 @@ public class OrderService {
         return orderDAO.getOrderByUserEmail(email);
     }
 
+    @Transactional
     public void insertOrder(Order order)
     {
         orderDAO.insertOrder(order);
+        for(int i = 0; i < order.getOrderItems().size(); ++i){
+            orderItemDAO.insertOrderItem(order.getOrderItems().get(i));
+        }
     }
 
+    @Transactional
     public void deleteOrder(Order order)
     {
+        for(int i = 0; i < order.getOrderItems().size(); ++i){
+            orderItemDAO.deleteOrderItem(order.getOrderItems().get(i));
+        }
         orderDAO.deleteOrder(order);
     }
 

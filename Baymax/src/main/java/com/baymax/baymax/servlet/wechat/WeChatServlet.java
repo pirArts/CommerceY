@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.baymax.baymax.servlet.BaseServlet;
-
+import com.baymax.baymax.utils.common.ServletUtil;
 import com.baymax.baymax.utils.wechat.SignUtil;
 import com.baymax.baymax.utils.wechat.WechatProcess;
 
@@ -35,14 +35,11 @@ public class WeChatServlet extends BaseServlet{
 
         String echostr = req.getParameter("echostr"); 
 
-        if(SignUtil.checkSignature(signature, timestamp, nonce)){
-           resp.setStatus(200);
-           writeResponse(resp, echostr);
+        if(!SignUtil.checkSignature(signature, timestamp, nonce)){
+            echostr = "InValid";
         }
-        else{
-            resp.setStatus(200);
-            writeResponse(resp, "InValid");
-        }
+        
+        ServletUtil.writeResponse(resp, 200, echostr);
     }
 
     @Override
@@ -62,19 +59,10 @@ public class WeChatServlet extends BaseServlet{
         
         String xml = sb.toString();
 
-        resp.setStatus(200);
-
-        String result = new WechatProcess().processWechatMag(xml);
+        String result = WechatProcess.processWechatMag(xml);
 
         logger.debug(result);
         
-        writeResponse(resp, result);
-    }
-
-    private void writeResponse(HttpServletResponse response, String info) throws IOException {
-        PrintWriter out = response.getWriter();
-        out.println(info);
-        out.close();
-        out = null;
+        ServletUtil.writeResponse(resp, 200, result);
     }
 }

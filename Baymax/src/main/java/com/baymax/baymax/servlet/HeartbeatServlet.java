@@ -1,6 +1,5 @@
 package com.baymax.baymax.servlet;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import com.google.gson.Gson;
 
 import org.slf4j.Logger;
@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 
 import com.baymax.baymax.model.User;
 import com.baymax.baymax.service.identity.UserService;
-
 import com.baymax.baymax.model.ProductCategory;
 import com.baymax.baymax.model.Product;
 import com.baymax.baymax.service.commerce.catlog.CatalogService;
+import com.baymax.baymax.utils.common.JsonUtil;
 
 public class HeartbeatServlet extends BaseServlet{
     
@@ -45,28 +45,22 @@ public class HeartbeatServlet extends BaseServlet{
 
         User user = userService.getUserByDeviceId("aaaaa");
 
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-
+        String json = JsonUtil.Serialize(user);
         logger.debug("json data: {}", json);
 
         ProductCategory productCategory = catalogService.getCategory(1);
-        json = gson.toJson(productCategory);
+        json = JsonUtil.Serialize(productCategory);
         logger.debug(json);
         
         List<ProductCategory> categoryList = catalogService.getCategoryList();
-        json = gson.toJson(categoryList);
+        json = JsonUtil.Serialize(categoryList);
         logger.debug(json);
         
         List<Product> productList = catalogService.getProductListByCategory(1);
-        json = gson.toJson(productList);
+        json = JsonUtil.Serialize(productList);
         
-        resp.setStatus(200);
-        writeResponse(resp, json);
-    }
-
-    private void writeResponse(HttpServletResponse response, String info) throws IOException {
-        PrintWriter out = response.getWriter();
-        out.println(info);
+        json = JsonUtil.Serialize(null);
+        
+        writeResponse(resp, 200, json);
     }
 }

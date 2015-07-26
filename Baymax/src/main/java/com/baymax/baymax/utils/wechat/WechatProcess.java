@@ -1,16 +1,13 @@
-package com.baymax.baymax.utils.wechat; 
-  
-import java.util.Date;  
+package com.baymax.baymax.utils.wechat;
 
-public class WechatProcess { 
-    public String processWechatMag(String xml){  
+public class WechatProcess {
+    public static String processWechatMag(String xml){
  
-        ReceiveXmlEntity xmlEntity = new ReceiveXmlProcess().getMsgEntity(xml);  
-         
-  
-        String result = "NoResult";  
+        ReceiveXmlEntity xmlEntity = ReceiveXmlProcess.getMsgEntity(xml);
+        
+        String result = "NoResult";
         if(xmlEntity.getMsgType().equals("text")){  
-            result = "Your openID is " + xmlEntity.getFromUserName();  
+            result = "Your openID is " + xmlEntity.getFromUserName();
         }
         else if(xmlEntity.getMsgType().equals("event")){
             if(xmlEntity.getEvent().equals("subscribe")){
@@ -21,8 +18,8 @@ public class WechatProcess {
             }
         }
          
-        result = new FormatXmlProcess().formatXmlAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(), result);  
-         
-        return result;  
+        result = new FormatXmlProcess().formatXmlAnswer(xmlEntity.getFromUserName(), xmlEntity.getToUserName(), result);
+        
+        return result;
     }  
 }  

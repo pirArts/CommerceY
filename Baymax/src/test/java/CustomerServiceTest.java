@@ -1,8 +1,6 @@
 import junit.framework.Assert;
 import org.junit.Test;
 
-import java.util.List;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,12 +13,12 @@ import com.baymax.baymax.service.identity.CustomerService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:conf/spring.xml", "classpath:conf/spring-mybatis.xml"})
 public class CustomerServiceTest {
-        
-        @Autowired 
-        private CustomerService customerService;
-        
-        @Test
-        public void testCustomerOperation(){
+
+    @Autowired 
+    private CustomerService customerService;
+
+    @Test
+    public void testCustomerOperation(){
         CustomerType customerType = new CustomerType();
         customerType.setName("customertest");
         customerService.insertCustomerType(customerType);
@@ -60,5 +58,5 @@ public class CustomerServiceTest {
         customerService.deleteCustomerType(customerType);
         customerType = customerService.getCustomerTypeByName("customertest");
         Assert.assertEquals(customerType, null);
-        }
+    }
 }

@@ -8,7 +8,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;  
 
 public class ReceiveXmlProcess {
-    public ReceiveXmlEntity getMsgEntity(String strXml){  
+    public static ReceiveXmlEntity getMsgEntity(String strXml){  
         ReceiveXmlEntity msg = null;  
         try {  
             if (strXml.length() <= 0 || strXml == null)  
