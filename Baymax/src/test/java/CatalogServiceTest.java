@@ -18,7 +18,7 @@ public class CatalogServiceTest {
     
     @Autowired 
     private CatalogService catalogService;
-    
+
     @Test
     public void testProductOperation(){
 

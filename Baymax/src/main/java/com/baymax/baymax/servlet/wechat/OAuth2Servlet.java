@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ public class OAuth2Servlet extends BaseServlet {
             paramPair.put("code", code);
             paramPair.put("grant_type", "authorization_code");
 
-            result = new HttpUtil().GetContentFromUrl(url, paramPair);
+            result = HttpUtil.GetContentFromUrl(url, paramPair);
             
             Gson gson = new Gson();
             AccessTokenResult atr = gson.fromJson(result, AccessTokenResult.class);
@@ -52,7 +51,7 @@ public class OAuth2Servlet extends BaseServlet {
                 params.put("openid", atr.getOpenid());
                 params.put("lang", "zh_CN");
                 
-                result = new HttpUtil().GetContentFromUrl(userInfoUrl, params);
+                result = HttpUtil.GetContentFromUrl(userInfoUrl, params);
             }
         }
 
@@ -62,10 +61,4 @@ public class OAuth2Servlet extends BaseServlet {
         writeResponse(resp, result);
     }
 
-    private void writeResponse(HttpServletResponse response, String info) throws IOException {
-        PrintWriter out = response.getWriter();
-        out.println(info);
-        out.close();
-        out = null;
-    }
 }

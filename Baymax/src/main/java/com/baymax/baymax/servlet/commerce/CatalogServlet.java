@@ -41,8 +41,6 @@ public class CatalogServlet extends BaseServlet{
         }
         logger.debug(json);
         resp.setStatus(200);
-        PrintWriter out = resp.getWriter();
-        out.println(json);
-        out.close();
+        writeResponse(resp, json);
     }
 }
