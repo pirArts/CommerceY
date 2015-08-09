@@ -71,4 +71,10 @@ public class WeChatServlet extends BaseServlet{
         writeResponse(resp, result);
     }
 
+    private void writeResponse(HttpServletResponse response, String info) throws IOException {
+        PrintWriter out = response.getWriter();
+        out.println(info);
+        out.close();
+        out = null;
+    }
 }

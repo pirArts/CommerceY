@@ -23,21 +23,21 @@ public class CatalogServiceTest {
     public void testProductOperation(){
 
         ProductCategory productCategory = new ProductCategory();
-        productCategory.setName("test");
+        productCategory.setName("catlogtest");
         catalogService.insertProductCategory(productCategory);
 
-        ProductCategory pc = catalogService.getCategoryByName("test");
-        Assert.assertEquals(pc.getName(), "test");
+        ProductCategory pc = catalogService.getCategoryByName("catlogtest");
+        Assert.assertEquals(pc.getName(), "catlogtest");
 
         Product product1 = new Product();
-        product1.setName("java-mybatis");
+        product1.setName("catlogtest-1");
         product1.setPrice(100.0f);
         product1.setDescription("java web development");
         product1.setProductCategory(pc);
         catalogService.insertProduct(product1);
 
         Product product2 = new Product();
-        product2.setName("java-spring");
+        product2.setName("catlogtest-2");
         product2.setPrice(100.0f);
         product2.setDescription("java web development");
         product2.setProductCategory(pc);
@@ -53,7 +53,7 @@ public class CatalogServiceTest {
         Assert.assertEquals(products.size(), 0);
 
         catalogService.deleteProductCategory(pc);
-        pc = catalogService.getCategoryByName("test");
+        pc = catalogService.getCategoryByName("catlogtest");
         Assert.assertEquals(pc, null);
     }
 }

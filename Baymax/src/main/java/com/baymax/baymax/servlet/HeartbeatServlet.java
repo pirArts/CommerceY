@@ -65,4 +65,8 @@ public class HeartbeatServlet extends BaseServlet{
         writeResponse(resp, json);
     }
 
+    private void writeResponse(HttpServletResponse response, String info) throws IOException {
+        PrintWriter out = response.getWriter();
+        out.println(info);
+    }
 }

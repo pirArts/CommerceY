@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  Primitive or simply data types such as Integer and String have no relevant properties,
+ and thus will replace the full value of the parameter entirely, so the name of the parameter is not important-->
+<mapper namespace = "com.baymax.baymax.dao.BasketItemDAO">
+  <resultMap id="DetailedBasketItemResultMap" type="BasketItem">
+        <id property="id" column="basket_item_id"/>
+        <result property="quantity" column="quantity"/>
+        <association property="product" javaType="Product">
+            <id column="product_id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="description" property="description"/>
+            <result column="price" property="price"/>
+        </association>
+        <association property="basket" javaType="Basket">
+          <id column="basket_id" property="id"/>
+          <result column="create_time" property="createTime"/>
+          <result column="amount" property="amount"/>
+          <association property="customer" javaType="Customer">
+              <id column="customer_id" property="id"/>
+              <result column="email" property="email"/>
+              <result column="password" property="password"/>
+              <result column="nickname" property="nickname"/>
+              <result column="phone" property="phone"/>
+              <result column="address" property="address"/>
+              <result column="gender" property="gender"/>
+              <result column="wechat_openid" property="wechatOpenID"/>
+          </association>
+        </association>
+  </resultMap>
+    
+  <select id="getBasketItem" resultMap="DetailedBasketItemResultMap">
+    SELECT
+       basket_item.id AS basket_item_id,
+       basket_item.quantity,
+       basket.id AS basket_id,
+       basket.create_time,
+       basket.amount,
+       product.id AS product_id,
+       product.name,
+       product.description,
+       product.price,
+       basket.customer_id,
+       customer.email,
+       customer.password,
+       customer.nickname,
+       customer.phone,
+       customer.address,
+       customer.gender,
+       customer.wechat_openid
+    FROM basket_item
+    LEFT OUTER JOIN product ON product.id = basket_item.product_id
+    LEFT OUTER JOIN basket ON basket_item.basket_id = basket.id
+    LEFT OUTER JOIN customer ON customer.id = basket.customer_id
+    WHERE basket_item.id = #{id}
+  </select>
+
+  <select id="getBasketByUserEmail" resultMap="DetailedBasketItemResultMap">
+    SELECT
+       basket_item.id AS basket_item_id,
+       basket_item.quantity,
+       basket.id AS basket_id,
+       basket.create_time,
+       basket.amount,
+       product.id AS product_id,
+       product.name,
+       product.description,
+       product.price,
+       basket.customer_id,
+       customer.email,
+       customer.password,
+       customer.nickname,
+       customer.phone,
+       customer.address,
+       customer.gender,
+       customer.wechat_openid
+    FROM basket_item
+    LEFT OUTER JOIN product ON product.id = basket_item.product_id
+    LEFT OUTER JOIN basket ON basket_item.basket_id = basket.id
+    LEFT OUTER JOIN customer ON customer.id = basket.customer_id
+    WHERE customer.email = #{email}
+  </select>
+
+  <insert id="insertBasketItem" parameterType="BasketItem" >
+        INSERT INTO basket_item
+        (
+           basket_id, 
+           product_id, 
+           quantity
+        )
+        VALUES
+        (
+          #{basket.id},
+          #{product.id},
+          #{quantity}
+        )
+  </insert>
+
+  <delete id="deleteBasketItem" parameterType="BasketItem" >
+    DELETE FROM basket_item WHERE id = #{id}
+  </delete>
+
+  <delete id="deleteBasketItemsByBasket" parameterType="BasketItem" >
+    DELETE FROM basket_item WHERE basket_id = #{basket.id}
+  </delete>
+
+</mapper>

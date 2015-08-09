@@ -17,6 +17,7 @@ public class UserRequest {
     }
 
     public String getPass() {
+//        todo: hash password
         return pass;
     }
 

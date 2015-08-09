@@ -18,7 +18,7 @@ public class CustomerServiceTest {
 	
 	@Autowired 
 	private CustomerService customerService;
-
+	
 	@Test
 	public void testCustomerOperation(){
         CustomerType customerType = new CustomerType();

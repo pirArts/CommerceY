@@ -10,3 +10,4 @@ Our New project
 1. mvn package -e -X
 2. mvn tomcat7:run -e -X
 3. http://localhost:8080/baymax/heartbeat
+4. http://localhost:8080/baymax/catalog, http://localhost:8080/baymax/cart, http://localhost:8080/baymax/order

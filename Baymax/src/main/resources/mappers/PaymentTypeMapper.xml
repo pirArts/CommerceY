@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baymax.baymax.dao.PaymentTypeDAO">
+  <select id="getPaymentType" resultType="PaymentType">
+    SELECT
+      id,
+      name
+    FROM `payment_type`
+    WHERE id = #{id}
+  </select>
+
+  <select id="getPaymentTypeByName" resultType="PaymentType">
+    SELECT
+      id,
+      name
+    FROM `payment_type`
+    WHERE name = #{name}
+  </select>
+
+  <insert id="insertPaymentType" parameterType="PaymentType" >
+    INSERT INTO payment_type
+    (
+       name
+    )
+    VALUES
+    (
+      #{name}
+    )
+  </insert>
+
+  <delete id="deletePaymentType" parameterType="PaymentType" >
+    DELETE FROM payment_type WHERE id = #{id}
+  </delete>
+</mapper>

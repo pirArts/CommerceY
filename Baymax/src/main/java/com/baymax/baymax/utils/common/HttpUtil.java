@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class HttpUtil{
-	static public String GetContentFromUrl(String url, HashMap<String, String> paramKeyValuePair) throws UnsupportedEncodingException{
+	public String GetContentFromUrl(String url, HashMap<String, String> paramKeyValuePair) throws UnsupportedEncodingException{
 
 		// Get hashmap in Set interface to get key and value
         Set s = paramKeyValuePair.entrySet();

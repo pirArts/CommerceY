@@ -37,6 +37,7 @@
         <servlet-name>OAuth2</servlet-name>
         <url-pattern>/oauth2</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>Catalog</servlet-name>
         <servlet-class>com.baymax.baymax.servlet.commerce.CatalogServlet</servlet-class>
@@ -45,6 +46,26 @@
     <servlet-mapping>
         <servlet-name>Catalog</servlet-name>
         <url-pattern>/catalog</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Cart</servlet-name>
+        <servlet-class>com.baymax.baymax.servlet.commerce.CartServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Cart</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Order</servlet-name>
+        <servlet-class>com.baymax.baymax.servlet.commerce.OrderServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Order</servlet-name>
+        <url-pattern>/order</url-pattern>
     </servlet-mapping>
 
     <context-param>
